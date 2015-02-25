@@ -19,7 +19,7 @@ public enum RegexFlags {
 
 public struct Regex {
     public let pattern: String
-    public let options: Set<RegexFlags>
+    public var options: Set<RegexFlags>
     
     public init(_ pattern: String, options: Set<RegexFlags>) {
         self.pattern = pattern
