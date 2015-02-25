@@ -21,12 +21,12 @@ public struct Regex {
     public let pattern: String
     public let options: Set<RegexFlags>
     
-    public init(pattern: String, options: Set<RegexFlags>) {
+    public init(_ pattern: String, options: Set<RegexFlags>) {
         self.pattern = pattern
         self.options = options
     }
     
-    public init(pattern: String) {
+    public init(_ pattern: String) {
         self.pattern = pattern
         self.options = []
     }
