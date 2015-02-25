@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 Pod::Spec.new do |s|
   s.name         = "SwiftRegex"
-  s.version      = "1.0.0"
+  s.version      = "1.1.0"
   s.summary      = "A simple Swift NSRegularExpression library"
-  s.platform     = :osx, "10.10"
+
+  s.ios.deployment_target = "8.1"
+  s.osx.deployment_target = "10.10"
 
   s.description  = <<-DESC
 SwiftRegex is a simple wrapper around the Foundation NSRegularExpression API.
@@ -21,7 +23,7 @@ The Regex struct also conforms to `StringLiteralConvertible` for easy creation.
   s.homepage     = "http://github.com/wjk/SwiftRegex"
   s.license      = { :type => "MIT", :file => "LICENSE.md" }
   s.author    = "William Kent"
-  
+
   s.source       = { :git => "https://github.com/wjk/SwiftRegex.git", :tag => s.version.to_s }
   s.source_files  = "SwiftRegex/*.swift"
   s.requires_arc  = true
