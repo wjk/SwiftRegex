@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Pod::Spec.new do |s|
   s.name         = "SwiftRegex"
-  s.version      = "1.2.0"
+  s.version      = "1.3.0"
   s.summary      = "A simple Swift NSRegularExpression library"
 
   s.ios.deployment_target = "8.1"
