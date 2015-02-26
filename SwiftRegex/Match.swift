@@ -25,6 +25,12 @@ public struct RegexMatch {
         self.cocoaMatch = cocoaMatch
     }
     
+    public var range: NSRange {
+        get {
+            return cocoaMatch.range
+        }
+    }
+    
     public var entireMatch: String? {
         get {
             return safeSubstring(sourceString, cocoaMatch.range)
@@ -35,6 +41,10 @@ public struct RegexMatch {
         get {
             return cocoaMatch.numberOfRanges - 1
         }
+    }
+    
+    public func subgroupRangeAtIndex(index: Int) -> NSRange? {
+        return cocoaMatch.rangeAtIndex(index + 1)
     }
     
     public func subgroupMatchAtIndex(index: Int) -> String? {
