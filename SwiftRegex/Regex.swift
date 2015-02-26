@@ -99,6 +99,23 @@ public struct Regex {
         }
     }
     
+    public func match(string: String, options: NSMatchingOptions, startPosition: Int) -> [RegexMatch]? {
+        if let matcher = matcher {
+            let cocoaMatches = matcher.matchesInString(string, options: options, range: NSMakeRange(startPosition, count(string) - startPosition))
+            var retval = [RegexMatch]()
+            
+            for match: AnyObject in cocoaMatches {
+                if let match = match as? NSTextCheckingResult {
+                    retval.append(RegexMatch(cocoaMatch: match, inString: string))
+                }
+            }
+            
+            return retval
+        } else {
+            return nil
+        }
+    }
+    
     public func replace(string: String, withTemplate template: String) -> String? {
         return replace(string, options: nil, withTemplate: template)
     }
