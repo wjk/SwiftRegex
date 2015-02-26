@@ -8,6 +8,12 @@
 
 import Foundation
 
+private func convertRange(range: NSRange, relativeToString string: String) -> Range<String.Index> {
+    let start = advance(string.startIndex, range.location)
+    let end = advance(string.startIndex, NSMaxRange(range))
+    return Range(start: start, end: end)
+}
+
 public enum RegexFlags {
     case CaseInsensitive
     case AllowCommentsAndWhitespace
@@ -129,6 +135,44 @@ public struct Regex {
         }
         
         return nil
+    }
+    
+    public func replace(string: String, withBlock block: (RegexMatch) -> String) -> String? {
+        return replace(string, options: nil, withBlock: block)
+    }
+    
+    public func replace(string: String, options: NSMatchingOptions, withBlock block: (RegexMatch) -> String) -> String? {
+        if let matches = match(string, options: options) {
+            var replacements: [(NSRange, String)] = []
+            
+            for match in matches {
+                let replacedSubstring = block(match)
+                replacements.append((match.range, replacedSubstring))
+            }
+            
+            // Sort the replacements in order of location, then reverse it.
+            // By applying the replacements in right-to-left order, I avoid having
+            // to recalculate all the indices when a replacement changes the length
+            // of the replaced substring.
+            sort(&replacements, {
+                (lhs, rhs) -> Bool in
+                let (leftRange, _) = lhs
+                let (rightRange, _) = rhs
+                
+                return leftRange.location < rightRange.location
+            })
+            replacements = reverse(replacements)
+            
+            var retval = string
+            for pair in replacements {
+                let (range, substring) = pair
+                retval.replaceRange(convertRange(range, relativeToString: retval), with: substring)
+            }
+            
+            return retval
+        } else {
+            return nil
+        }
     }
 }
 
