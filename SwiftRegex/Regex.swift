@@ -78,7 +78,7 @@ public struct Regex {
         // This function returns true if the regex matches, false if the regex does
         // not match, or nil if there is a syntax error in the regex itself.
         if let matcher = matcher {
-            return matcher.numberOfMatchesInString(string, options: options, range: NSMakeRange(0, string.utf16Count)) != 0
+            return matcher.numberOfMatchesInString(string, options: options, range: NSMakeRange(0, count(string))) != 0
         } else {
             return nil
         }
@@ -90,7 +90,7 @@ public struct Regex {
     
     public func match(string: String, options: NSMatchingOptions) -> [RegexMatch]? {
         if let matcher = matcher {
-            let cocoaMatches = matcher.matchesInString(string, options: options, range: NSMakeRange(0, string.utf16Count))
+            let cocoaMatches = matcher.matchesInString(string, options: options, range: NSMakeRange(0, count(string)))
             var retval = [RegexMatch]()
             
             for match: AnyObject in cocoaMatches {
